@@ -1,7 +1,13 @@
 import React from "react";
-import './games-list.scss';
+import "./games-list.scss";
+import { GameItem } from "./games-item";
 
-
-export const GamesList = ({ children }) => {
-  return <div className="list">{children}</div>;
+export const GamesList = ({ gamesList }) => {
+  return (
+    <div className="list">
+      {gamesList.map((game) => (
+        <GameItem key={game.id} title={game.title} thumbnail={game.thumbnail} />
+      ))}
+    </div>
+  );
 };

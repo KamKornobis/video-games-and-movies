@@ -7,7 +7,9 @@ import { getGames } from "../../api/getGames";
 import { SearchBox } from "../search-box/search-box";
 
 export const GamesSite = () => {
-  const [data, setData] = useState();
+  const [gamesList, setGameList] = useState([]);
+  const [searchField, setSearchField] = useState("")
+  const [filteredGamesList, setFilteredGamesList] = useState([]);
 
   useEffect(() => {
     getList();
@@ -15,10 +17,21 @@ export const GamesSite = () => {
 
   const getList = async () => {
     const games = await getGames();
-    setData(games);
+    setGameList(games);
   
   };
-  console.log(data)
+
+  useEffect(() => {
+    const newFilteredGamesList = gamesList.filter((game) => {
+      return game.title.toLocaleLowerCase().includes(searchField);
+    });
+    setFilteredGamesList(newFilteredGamesList);
+  }, [gamesList, searchField]);
+
+  const onSearchChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setSearchField(searchFieldString);
+  };
 
   return (
     <div>
@@ -30,20 +43,11 @@ export const GamesSite = () => {
         to play next
       </h1>
       <SearchBox
-        // onChangeHandler={onSearchChange}
+        onChangeHandler={onSearchChange}
         placeholder="search games"
         className="search-box"
       />
-      <GamesList>
-      {data && 
-      data.map((game) => (
-        <GameItem 
-        key={game.id}
-        title={game.title}
-        thumbnail={game.thumbnail}/>
-      ))
-      }
-      </GamesList>
+      <GamesList gamesList={filteredGamesList} />
     </div>
   );
 };
