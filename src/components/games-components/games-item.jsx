@@ -3,8 +3,8 @@ import './games-item.scss';
 
 export const GameItem = ({ title, thumbnail, onClick }) => {
   return (
-    <div onClick={onClick}>
-      <h1 className="title">{title}</h1>
+    <div className="game-container" onClick={onClick}>
+      <h1 className="game-title">{title}</h1>
       <img src={thumbnail} alt={`${title}`}></img>
     </div>
   );

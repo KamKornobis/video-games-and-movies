@@ -2,7 +2,6 @@ import { Button } from "../button/button";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./home.scss";
-import { getGames } from "../../api/getGames";
 
 export const Home = () => {
 

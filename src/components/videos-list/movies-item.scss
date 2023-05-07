@@ -1,8 +1,8 @@
-.game-title {
+.movie-title {
     font-size: 20px;
 }
 
-.game-container {
+.movie-container {
     margin: 5px;
     border: 2px solid black;
     max-width: 20%;
@@ -10,8 +10,7 @@
     flex-direction: column;
     overflow: hidden;
 }
-
-.game-container:hover {
+.movie-container:hover {
     cursor: pointer;
     img {
         opacity: 0.8;

@@ -2,12 +2,13 @@ import { Button } from "../button/button";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getMovies } from "../../api/getMovies";
-import { MoviesItem } from "../videos-list/movies-item";
 import { MoviesList } from "../videos-list/movies-list";
 import { SearchBox } from "../search-box/search-box";
 
 export const MoviesSite = () => {
-  const [data, setData] = useState();
+  const [moviesList, setMoviesList] = useState([]);
+  const [searchField, setSearchField] = useState("")
+  const [filteredMoviesList, setFilteredMoviesList] = useState([]);
 
   useEffect(() => {
     getList();
@@ -15,9 +16,20 @@ export const MoviesSite = () => {
 
   const getList = async () => {
     const movies = await getMovies();
-    setData(movies);
+    setMoviesList(movies);
   };
-  console.log(data);
+
+  useEffect(() => {
+    const newFilteredGamesList = moviesList.filter((game) => {
+      return game.title.toLocaleLowerCase().includes(searchField);
+    });
+    setFilteredMoviesList(newFilteredGamesList);
+  }, [moviesList, searchField]);
+
+  const onSearchChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setSearchField(searchFieldString);
+  };
 
   return (
     <div>
@@ -29,20 +41,11 @@ export const MoviesSite = () => {
         Tell us what you watched recently, and we will recommend You something!
       </h1>
       <SearchBox
-        // onChangeHandler={onSearchChange}
+        onChangeHandler={onSearchChange}
         placeholder="search movies"
         className="search-box"
       />
-      <MoviesList>
-        {data &&
-          data.map((movie) => (
-            <MoviesItem
-              key={movie._id}
-              title={movie.title}
-              image={movie.image}
-            />
-          ))}
-      </MoviesList>
+      <MoviesList moviesList={filteredMoviesList}/>
     </div>
   );
 };

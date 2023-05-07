@@ -3,7 +3,6 @@ export const getMovies = () => {
     const options = {
         method: 'GET',
         headers: {
-
             'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
         }
     };

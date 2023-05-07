@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "../button/button";
 import { useEffect, useState } from "react";
 import { GamesList } from "../games-components/games-list";
-import { GameItem } from "../games-components/games-item";
 import { getGames } from "../../api/getGames";
 import { SearchBox } from "../search-box/search-box";
 
