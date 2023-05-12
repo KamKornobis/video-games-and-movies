@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../button/button";
 import { useEffect, useState } from "react";
 import { GamesList } from "../games-components/games-list";
-import { getGames } from "../../api/getGames";
+import { getData } from "../../api/getData";
 import { SearchBox } from "../search-box/search-box";
 
 export const GamesSite = () => {
@@ -15,10 +15,18 @@ export const GamesSite = () => {
   }, []);
 
   const getList = async () => {
-    const games = await getGames();
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
+        'X-RapidAPI-Key': '6595002667msh58518e4e7ab6d3bp11f99bjsn8e18e855b2db',
+      },
+    };
+    const games = await getData("https://free-to-play-games-database.p.rapidapi.com/api/games", options);
     setGameList(games);
-  
+    console.log(games)
   };
+  
 
   useEffect(() => {
     const newFilteredGamesList = gamesList.filter((game) => {

@@ -1,7 +1,7 @@
 import { Button } from "../button/button";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getMovies } from "../../api/getMovies";
+import { getData } from "../../api/getData";
 import { MoviesList } from "../videos-list/movies-list";
 import { SearchBox } from "../search-box/search-box";
 
@@ -15,7 +15,14 @@ export const MoviesSite = () => {
   }, []);
 
   const getList = async () => {
-    const movies = await getMovies();
+    const options = {
+      method: 'GET',
+      headers: {
+          'X-RapidAPI-Key': '6595002667msh58518e4e7ab6d3bp11f99bjsn8e18e855b2db',
+          'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
+      }
+  };
+    const movies = await getData('https://imdb-top-100-movies.p.rapidapi.com/', options);
     setMoviesList(movies);
   };
 
