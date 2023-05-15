@@ -1,12 +1,17 @@
 import React from "react";
 import "./games-list.scss";
-import { GameItem } from "./games-item";
+import { GameItem } from "./game-item";
 
-export const GamesList = ({ gamesList }) => {
+export const GamesList = ({ games, onClick }) => {
   return (
-    <div className="list">
-      {gamesList.map((game) => (
-        <GameItem key={game.id} title={game.title} thumbnail={game.thumbnail} />
+    <div className="games-list-container">
+      {games.map((game) => (
+        <GameItem
+          key={game.id}
+          title={game.title}
+          thumbnail={game.thumbnail}
+          onClick={onClick}
+        />
       ))}
     </div>
   );

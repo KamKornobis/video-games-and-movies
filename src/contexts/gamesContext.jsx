@@ -1,14 +1,15 @@
 import { createContext, useState } from "react";
-import GAMES from "../response.json";
 
 export const GamesContext = createContext({
   games: [],
 });
 
 export const GamesProvider = ({ children }) => {
-  const [games, setGames] = useState(GAMES);
-  const value = { games };
+  const [games, setGames] = useState([]);
+
   return (
-    <GamesContext.Provider value={value}>{children}</GamesContext.Provider>
+    <GamesContext.Provider value={[games, setGames]}>
+      {children}
+    </GamesContext.Provider>
   );
 };

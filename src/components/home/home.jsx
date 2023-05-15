@@ -1,19 +1,21 @@
 import { Button } from "../button/button";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./home.scss";
 
 export const Home = () => {
-
   return (
     <div className="home-container">
-      <h1>What would You like to check today?</h1>
+      <h1 className="header">What would You like to check today?</h1>
+      <div className="games-link-container">
       <Link to="/games">
-        <Button name={"Games"} />
+        <Button buttonType="games-button" name={"Games"} />
       </Link>
+      </div>
+      <div className="movies-link-container">
       <Link to="/movies">
-        <Button name={"Movies"} />
+        <Button buttonType="movies-button" name={"Movies"} />
       </Link>
+      </div>
     </div>
   );
 };

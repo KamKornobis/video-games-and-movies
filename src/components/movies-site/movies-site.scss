@@ -1,0 +1,11 @@
+.movies-page {
+  min-height: 1000px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background: linear-gradient(
+    to left,
+    rgb(184, 187, 5) 0%,
+    rgb(0, 128, 17) 100%
+  );
+}

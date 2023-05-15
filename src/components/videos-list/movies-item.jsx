@@ -1,5 +1,5 @@
 import React from "react";
-import './movies-item.scss';
+import "./movies-item.scss";
 
 export const MoviesItem = ({ title, image, onClick }) => {
   return (

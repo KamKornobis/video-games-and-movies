@@ -1,5 +1,5 @@
 import React from "react";
-import './games-item.scss';
+import "./games-item.scss";
 
 export const GameItem = ({ title, thumbnail, onClick }) => {
   return (
