@@ -6,11 +6,14 @@ import { MoviesList } from "../videos-list/movies-list";
 import { SearchBox } from "../search-box/search-box";
 import "./movies-site.scss";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { MoviesItem } from "../videos-list/movies-item";
 
 export const MoviesSite = () => {
   const [movies, setMovies] = useContext(MoviesContext);
   const [searchField, setSearchField] = useState("");
   const [filteredMoviesList, setFilteredMoviesList] = useState([]);
+  const [chosenMovie, setChosenMovie] = useState([]);
+  const [recommendedMovies, setRecommendedMovies] = useState([]);
 
   useEffect(() => {
     getList();
@@ -21,7 +24,7 @@ export const MoviesSite = () => {
       method: "GET",
       headers: {
         "X-RapidAPI-Host": "imdb-top-100-movies.p.rapidapi.com",
-        "X-RapidAPI-Key": ""
+        "X-RapidAPI-Key": "b320860d0fmsh62304f3bccb359bp107198jsn9f636ca1706e",
       },
     };
     const movies = await getData(
@@ -29,8 +32,17 @@ export const MoviesSite = () => {
       options
     );
     setMovies(movies);
-    console.log(movies)
+    console.log(movies);
   };
+
+  useEffect(() => {
+    const recommendedMovies = movies.filter((movie) => {
+      return movie.genre.toString().includes(chosenMovie.genre);
+    });
+    setRecommendedMovies(recommendedMovies);
+    console.log(recommendedMovies);
+    console.log(chosenMovie);
+  }, [movies, chosenMovie]);
 
   useEffect(() => {
     const newFilteredGamesList = movies.filter((movie) => {
@@ -46,21 +58,52 @@ export const MoviesSite = () => {
 
   return (
     <div className="movies-page">
-      <div>
-        <Link to="/">
-          <Button buttonType="home-button" name={"Take me to home site"} />
-        </Link>
-        <h1>
-          Tell us what you watched recently, and we will recommend You
-          something!
-        </h1>
-        <SearchBox
-          onChangeHandler={onSearchChange}
-          placeholder="search movies"
-          className="search-box"
-        />
-        <MoviesList movies={filteredMoviesList} />
-      </div>
+      {chosenMovie.length === 0 && (
+        <div>
+          <Link to="/">
+            <Button buttonType="home-button" name={"Take me to home site"} />
+          </Link>
+          <h1>
+            Tell us what you watched recently, and we will recommend You
+            something!
+          </h1>
+          <SearchBox
+            onChangeHandler={onSearchChange}
+            placeholder="search movies"
+            className="search-box"
+          />
+          <div className="movies-list-container">
+            {movies.map((movie) => (
+              <MoviesItem
+                key={movie.id}
+                title={movie.title}
+                image={movie.image}
+                onClick={() => setChosenMovie(movie)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {chosenMovie.length !== 0 && (
+        <div>
+          <Link to="/">
+            <Button buttonType="home-button" name={"Take me to home site"} />
+          </Link>
+          <h1>If you liked</h1>
+          <div className="chosen-movie-container">
+            <MoviesItem title={chosenMovie.title} image={chosenMovie.image} />
+          </div>
+          <h1>You Can also try</h1>
+          <MoviesList movies={recommendedMovies} />
+          <div className="toggle-list-button-container">
+          <Button
+            buttonType={"toggle-list-button"}
+            name={"Show me the List again"}
+            onClick={() => setChosenMovie([])}
+          />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

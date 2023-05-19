@@ -8,15 +8,11 @@ import { MoviesProvider } from './contexts/moviesContext';
 
 function App() {
   return (
-    <GamesProvider>
-    <MoviesProvider>
     <Routes>
       <Route path='/' element={<Home />}/>
       <Route path='/games' element={<GamesSite />} />
       <Route path='/movies' element={<MoviesSite />} />
     </Routes>
-    </MoviesProvider>
-    </GamesProvider>
   );
 }
 

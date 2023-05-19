@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "../button/button";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { GamesList } from "../games-components/games-list";
 import { getData } from "../../api/getData";
 import { SearchBox } from "../search-box/search-box";
@@ -12,8 +12,8 @@ export const GamesSite = () => {
   const [games, setGames] = useContext(GamesContext);
   const [searchField, setSearchField] = useState("");
   const [filteredGamesList, setFilteredGamesList] = useState([]);
-  const [recommendedList, setRecommendedist] = useState([]);
-  const [chosenGame, setChosenGame] = useState("");
+  const [recommendedGames, setRecommendedGames] = useState([]);
+  const [chosenGame, setChosenGame] = useState([]);
 
   useEffect(() => {
     getList();
@@ -24,7 +24,7 @@ export const GamesSite = () => {
       method: "GET",
       headers: {
         "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
-        "X-RapidAPI-Key": ""
+        "X-RapidAPI-Key": "b320860d0fmsh62304f3bccb359bp107198jsn9f636ca1706e",
       },
     };
     const games = await getData(
@@ -35,12 +35,12 @@ export const GamesSite = () => {
     console.log(games);
   };
 
-  useEffect(() => {
-    const newFilteredGamesList = games.filter((game) => {
-      return game.title.toLocaleLowerCase().includes(searchField);
-    });
-    setFilteredGamesList(newFilteredGamesList);
-  }, [games, searchField]);
+  // useEffect(() => {
+  //   const newFilteredGamesList = games.filter((game) => {
+  //     return game.title.toLocaleLowerCase().includes(searchField);
+  //   });
+  //   setFilteredGamesList(newFilteredGamesList);
+  // }, [games, searchField]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
@@ -49,19 +49,15 @@ export const GamesSite = () => {
 
   useEffect(() => {
     const recommendedGames = games.filter((game) => {
-      return game.genre.toLocaleLowerCase().includes(chosenGame);
+      return game.genre.includes(chosenGame.genre);
     });
-    setRecommendedist(recommendedGames);
+    setRecommendedGames(recommendedGames);
+    console.log(recommendedGames);
   }, [games, chosenGame]);
-
-  const onClickChange = (event) => {
-    const chosedGenre = event.target.value;
-    setChosenGame(chosedGenre);
-  };
 
   return (
     <div className="games-page">
-      {!chosenGame && (
+      {games.length === 0 && (
         <div>
           <Link className="home-link-container" to="/">
             <Button buttonType="home-button" name={"Take me to home site"} />
@@ -75,19 +71,58 @@ export const GamesSite = () => {
             placeholder="search games"
             className="search-box"
           />
-          <GamesList
-            onClick={() => onClickChange()}
-            games={filteredGamesList}
-          />
+          <span>Oops, Sorry, We can't load the list now. Try again Later</span>
         </div>
       )}
-      {chosenGame && (
+      {chosenGame.length === 0 && games.length !== 0 && (
         <div>
+          <Link className="home-link-container" to="/">
+            <Button buttonType="home-button" name={"Take me to home site"} />
+          </Link>{" "}
+          <h1>
+            Click the game you liked, and we will recommend You what would You
+            like to play next
+          </h1>
+          <SearchBox
+            onChangeHandler={onSearchChange}
+            placeholder="search games"
+            className="search-box"
+          />
+          {/* <GamesList onClick={() => setChosenGame()} games={filteredGamesList} /> */}
+          <div className="games-list-container">
+            {games.map((game) => (
+              <GameItem
+                key={game.id}
+                title={game.title}
+                thumbnail={game.thumbnail}
+                genre={game.genre}
+                onClick={() => setChosenGame(game)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {chosenGame && recommendedGames.length !== 0 && (
+        <div>
+          <Link to="/">
+            <Button buttonType="home-button" name={"Take me to home site"} />
+          </Link>
           <h1>If you liked</h1>
-          {console.log(chosenGame)}
-          <GameItem title={chosenGame.title} thumbnail={chosenGame.thumbnail} />
+          <div className="chosen-game-container">
+            <GameItem
+              title={chosenGame.title}
+              thumbnail={chosenGame.thumbnail}
+            />
+          </div>
           <h1>You Can also try</h1>
-          <GamesList gamesList={recommendedList} />
+          <GamesList games={recommendedGames} />
+          <div className="toggle-list-button-container">
+          <Button
+            buttonType={"toggle-list-button"}
+            name={"Show me the List again"}
+            onClick={() => setChosenGame([])}
+          />
+          </div>
         </div>
       )}
     </div>

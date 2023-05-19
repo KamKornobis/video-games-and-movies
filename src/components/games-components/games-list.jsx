@@ -10,6 +10,7 @@ export const GamesList = ({ games, onClick }) => {
           key={game.id}
           title={game.title}
           thumbnail={game.thumbnail}
+          genre={game.genre}
           onClick={onClick}
         />
       ))}
