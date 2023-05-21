@@ -32,7 +32,6 @@ export const GamesSite = () => {
       options
     );
     setGames(games);
-    console.log(games);
   };
 
   // useEffect(() => {
@@ -46,10 +45,12 @@ export const GamesSite = () => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
   };
-
   useEffect(() => {
     const recommendedGames = games.filter((game) => {
-      return game.genre.includes(chosenGame.genre);
+      return (
+        game.genre.includes(chosenGame.genre) &&
+        !game.title.includes(chosenGame.title)
+      );
     });
     setRecommendedGames(recommendedGames);
     console.log(recommendedGames);
@@ -117,11 +118,36 @@ export const GamesSite = () => {
           <h1>You Can also try</h1>
           <GamesList games={recommendedGames} />
           <div className="toggle-list-button-container">
-          <Button
-            buttonType={"toggle-list-button"}
-            name={"Show me the List again"}
-            onClick={() => setChosenGame([])}
-          />
+            <Button
+              buttonType={"toggle-list-button"}
+              name={"Show me the List again"}
+              onClick={() => setChosenGame([])}
+            />
+          </div>
+        </div>
+      )}
+      {chosenGame && recommendedGames.length === 0 && (
+        <div>
+          <Link to="/">
+            <Button buttonType="home-button" name={"Take me to home site"} />
+          </Link>
+          <h1>If you liked</h1>
+          <div className="chosen-game-container">
+            <GameItem
+              title={chosenGame.title}
+              thumbnail={chosenGame.thumbnail}
+            />
+          </div>
+          <h1>
+            Sorry, there are no games we can recommend You now. We
+            consistently updating our library, so You can try later.
+          </h1>
+          <div className="toggle-list-button-container">
+            <Button
+              buttonType={"toggle-list-button"}
+              name={"Show me the List again"}
+              onClick={() => setChosenGame([])}
+            />
           </div>
         </div>
       )}

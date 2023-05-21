@@ -37,7 +37,10 @@ export const MoviesSite = () => {
 
   useEffect(() => {
     const recommendedMovies = movies.filter((movie) => {
-      return movie.genre.toString().includes(chosenMovie.genre);
+      return (
+        movie.genre.toString().includes(chosenMovie.genre) &&
+        !movie.title.includes(chosenMovie.title)
+      );
     });
     setRecommendedMovies(recommendedMovies);
     console.log(recommendedMovies);
@@ -84,7 +87,7 @@ export const MoviesSite = () => {
           </div>
         </div>
       )}
-      {chosenMovie.length !== 0 && (
+      {chosenMovie.length !== 0 && recommendedMovies.length !== 0 && (
         <div>
           <Link to="/">
             <Button buttonType="home-button" name={"Take me to home site"} />
@@ -93,14 +96,36 @@ export const MoviesSite = () => {
           <div className="chosen-movie-container">
             <MoviesItem title={chosenMovie.title} image={chosenMovie.image} />
           </div>
-          <h1>You Can also try</h1>
+          <h1>You Can also watch</h1>
           <MoviesList movies={recommendedMovies} />
           <div className="toggle-list-button-container">
-          <Button
-            buttonType={"toggle-list-button"}
-            name={"Show me the List again"}
-            onClick={() => setChosenMovie([])}
-          />
+            <Button
+              buttonType={"toggle-list-button"}
+              name={"Show me the List again"}
+              onClick={() => setChosenMovie([])}
+            />
+          </div>
+        </div>
+      )}
+      {chosenMovie.length !== 0 && recommendedMovies.length === 0 && (
+        <div>
+          <Link to="/">
+            <Button buttonType="home-button" name={"Take me to home site"} />
+          </Link>
+          <h1>If you liked</h1>
+          <div className="chosen-movie-container">
+            <MoviesItem title={chosenMovie.title} image={chosenMovie.image} />
+          </div>
+          <h1>
+            Sorry, there are no movies we can recommend You now. We
+            consistently updating our library, so You can try later.
+          </h1>
+          <div className="toggle-list-button-container">
+            <Button
+              buttonType={"toggle-list-button"}
+              name={"Show me the List again"}
+              onClick={() => setChosenMovie([])}
+            />
           </div>
         </div>
       )}
