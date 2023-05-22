@@ -15,6 +15,7 @@ export const GamesList = ({ games, onClick }) => {
           developer={game.developer}
           releaseDate={game.release_date}
           platform={game.platform}
+          game_url={game.game_url}
         />
       ))}
     </div>

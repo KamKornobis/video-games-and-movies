@@ -13,6 +13,7 @@ export const MoviesList = ({ movies, onClick }) => {
           director={movie.director}
           year={movie.year}
           rating={movie.rating}
+          trailer={movie.trailer}
         />
       ))}
     </div>
