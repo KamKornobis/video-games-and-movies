@@ -1,27 +1,70 @@
 .game-title {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .game-container {
-    background-color: rgba(255, 255, 255, 0.725);
-    margin: 5px;
-    border: 2px solid black;
-    width: 23%;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    img{
-        width: 100%;
-        height: 90%;
-    }
+  background-color: rgba(255, 255, 255, 0.725);
+  margin: 5px;
+  border: 2px solid black;
+  width: 23%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 90%;
+  }
 }
 
 .game-container:hover {
-    cursor: pointer;
-    img {
-        opacity: 0.8;
-      transform: scale(1.1);
-      transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-    }
+  cursor: pointer;
+  img {
+    opacity: 0.7;
+    transform: scale(1.1);
+    transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+  }
+}
+
+.games-footer {
+  position: relative;
+  opacity: 0;
+  .genre {
+    position: absolute;
+    left: 15px;
+    bottom: 250px;
+    font-weight: bolder;
+    color: white;
+    opacity: 1;
+  }
+  .developer {
+    position: absolute;
+    left: 15px;
+    bottom: 200px;
+    font-weight: bolder;
+    color: white;
+    opacity: 1;
+  }
+  .releaseDate {
+    position: absolute;
+    left: 15px;
+    bottom: 150px;
+    font-weight: bolder;
+    color: white;
+    opacity: 1;
+  }
+  .platform {
+    position: absolute;
+    left: 15px;
+    bottom: 100px;
+    font-weight: bolder;
+    color: white;
+  }
+  button{
+    position: absolute;
+    left: 50px;
+    bottom: 20px;
+    font-weight: bolder;
+    opacity: 1;
+  }
 }

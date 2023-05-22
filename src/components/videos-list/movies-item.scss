@@ -23,3 +23,39 @@
     transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
   }
 }
+
+.movies-footer {
+  position: relative;
+  opacity: 0;
+  .director {
+    position: absolute;
+    left: 15px;
+    bottom: 250px;
+    font-weight: bolder;
+    color: white;
+    opacity: 1;
+  }
+  .year {
+    position: absolute;
+    left: 15px;
+    bottom: 200px;
+    font-weight: bolder;
+    color: white;
+    opacity: 1;
+  }
+  .rating {
+    position: absolute;
+    left: 15px;
+    bottom: 150px;
+    font-weight: bolder;
+    color: white;
+    opacity: 1;
+  }
+  button{
+    position: absolute;
+    left: 50px;
+    bottom: 70px;
+    font-weight: bolder;
+    opacity: 1;
+  }
+}

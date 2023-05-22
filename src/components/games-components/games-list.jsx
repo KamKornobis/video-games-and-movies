@@ -12,6 +12,9 @@ export const GamesList = ({ games, onClick }) => {
           thumbnail={game.thumbnail}
           genre={game.genre}
           onClick={onClick}
+          developer={game.developer}
+          releaseDate={game.release_date}
+          platform={game.platform}
         />
       ))}
     </div>

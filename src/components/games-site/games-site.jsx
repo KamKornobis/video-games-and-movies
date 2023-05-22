@@ -34,12 +34,12 @@ export const GamesSite = () => {
     setGames(games);
   };
 
-  // useEffect(() => {
-  //   const newFilteredGamesList = games.filter((game) => {
-  //     return game.title.toLocaleLowerCase().includes(searchField);
-  //   });
-  //   setFilteredGamesList(newFilteredGamesList);
-  // }, [games, searchField]);
+  useEffect(() => {
+    const newFilteredGamesList = games.filter((game) => {
+      return game.title.toLocaleLowerCase().includes(searchField);
+    });
+    setFilteredGamesList(newFilteredGamesList);
+  }, [games, searchField]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
@@ -89,14 +89,13 @@ export const GamesSite = () => {
             placeholder="search games"
             className="search-box"
           />
-          {/* <GamesList onClick={() => setChosenGame()} games={filteredGamesList} /> */}
+          {/* <GamesList onClick={() => onClickHandler()} games={filteredGamesList} /> */}
           <div className="games-list-container">
             {games.map((game) => (
               <GameItem
                 key={game.id}
                 title={game.title}
                 thumbnail={game.thumbnail}
-                genre={game.genre}
                 onClick={() => setChosenGame(game)}
               />
             ))}
@@ -116,6 +115,7 @@ export const GamesSite = () => {
             />
           </div>
           <h1>You Can also try</h1>
+          <div className="recommended-games-container">
           <GamesList games={recommendedGames} />
           <div className="toggle-list-button-container">
             <Button
@@ -124,9 +124,10 @@ export const GamesSite = () => {
               onClick={() => setChosenGame([])}
             />
           </div>
+          </div>
         </div>
       )}
-      {chosenGame && recommendedGames.length === 0 && (
+      {chosenGame.length !== 0 && recommendedGames.length === 0 && (
         <div>
           <Link to="/">
             <Button buttonType="home-button" name={"Take me to home site"} />

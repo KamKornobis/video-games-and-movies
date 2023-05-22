@@ -97,7 +97,9 @@ export const MoviesSite = () => {
             <MoviesItem title={chosenMovie.title} image={chosenMovie.image} />
           </div>
           <h1>You Can also watch</h1>
+          <div className="recommended-movies-container">
           <MoviesList movies={recommendedMovies} />
+          </div>
           <div className="toggle-list-button-container">
             <Button
               buttonType={"toggle-list-button"}

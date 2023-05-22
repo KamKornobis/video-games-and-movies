@@ -30,3 +30,19 @@
 .toggle-list-button-container {
   margin: 60px;
 }
+
+.recommended-games-container{
+  .game-container:hover {
+    cursor: default;
+    color: white;
+    img {
+        opacity: 0.3;
+      transform: scale(1.1);
+      transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    }
+    background-color: rgba(0, 0, 0, 0.975);
+    .games-footer{
+      opacity: 1;
+    }
+}
+}
