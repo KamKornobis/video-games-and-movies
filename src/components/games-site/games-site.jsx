@@ -23,15 +23,19 @@ export const GamesSite = () => {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com",
-        "X-RapidAPI-Key": "b320860d0fmsh62304f3bccb359bp107198jsn9f636ca1706e",
+        "X-RapidAPI-Host": "free-to-play-games-database.p.rapidapi.com"
       },
     };
     const games = await getData(
       "https://free-to-play-games-database.p.rapidapi.com/api/games",
       options
     );
+    if(Array.isArray(games)) {
     setGames(games);
+    } else {
+      setGames([])
+    }
+    console.log(games)
   };
 
   useEffect(() => {
@@ -55,6 +59,12 @@ export const GamesSite = () => {
     setRecommendedGames(recommendedGames);
     console.log(recommendedGames);
   }, [games, chosenGame]);
+
+  const chooseGame = (game) => {
+      const chosingGame = game
+      console.log(game)
+      setChosenGame(chosingGame)
+  }
 
   return (
     <div className="games-page">
@@ -89,8 +99,8 @@ export const GamesSite = () => {
             placeholder="search games"
             className="search-box"
           />
-          {/* <GamesList onClick={() => onClickHandler()} games={filteredGamesList} /> */}
-          <div className="games-list-container">
+          <GamesList chooseGame={chooseGame} games={filteredGamesList} />
+          {/* <div className="games-list-container">
             {games.map((game) => (
               <GameItem
                 key={game.id}
@@ -99,7 +109,7 @@ export const GamesSite = () => {
                 onClick={() => setChosenGame(game)}
               />
             ))}
-          </div>
+          </div> */}
         </div>
       )}
       {chosenGame && recommendedGames.length !== 0 && (

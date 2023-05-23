@@ -2,7 +2,7 @@ import React from "react";
 import "./games-list.scss";
 import { GameItem } from "./game-item";
 
-export const GamesList = ({ games, onClick }) => {
+export const GamesList = ({ games, chooseGame }) => {
   return (
     <div className="games-list-container">
       {games.map((game) => (
@@ -11,7 +11,9 @@ export const GamesList = ({ games, onClick }) => {
           title={game.title}
           thumbnail={game.thumbnail}
           genre={game.genre}
-          onClick={onClick}
+          onClick={() => {
+            chooseGame(game)
+          }}
           developer={game.developer}
           releaseDate={game.release_date}
           platform={game.platform}
